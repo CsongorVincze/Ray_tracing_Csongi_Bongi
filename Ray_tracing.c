@@ -13,6 +13,8 @@ int main(void){
 
     //itt most asszem csinalunk egy szines kepet
     for(int j = 0; j < image_height; j++){
+        fprintf(stderr, "\rProcessed lines: %d / %d", j+1, image_height);
+        fflush(stderr);
         for(int i = 0; i < image_width; i++){
             double r = (double)i / (double)(image_width-1);
             double g = (double)j / (double)(image_height-1);
@@ -22,7 +24,7 @@ int main(void){
             int in_g = (int)(255.999*g);
             int in_b = (int)(255.999*b);
 
-            printf("%d %d %d\n", in_r, in_g, in_b);
+            //printf("%d %d %d\n", in_r, in_g, in_b);
         }
     }
 
