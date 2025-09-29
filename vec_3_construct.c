@@ -10,7 +10,7 @@ vec_3 vec_3_zero(void){
     return v;
 }
 
-vec_3 negate(vec_3 v){ //itt ez nem mukodik
-    vec_3 w = {-v.x, -v.y, -v.z};
+vec_3 vec_3_negate(vec_3 v){ //itt ez nem mukodik
+    vec_3 w = vec_3_create(-v.x, -v.y, -v.z);
     return w;
 }
