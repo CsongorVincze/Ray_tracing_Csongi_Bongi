@@ -4,7 +4,6 @@
 #include "vec_3.h"
 #include "color.h"
 
-
 int main(void){
     
     //kep meretek

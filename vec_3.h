@@ -11,8 +11,7 @@ typedef struct {
 } vec_3;
 
 
-//krealo fuggvenyek
-vec_3 _create(double x, double y, double z);
+//egysegvektor
 vec_3 _zero(void);
 //muveleti fuggvenyek
 vec_3* _neg(vec_3* v);
