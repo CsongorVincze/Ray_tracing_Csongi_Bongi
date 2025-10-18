@@ -8,8 +8,11 @@
 
 typedef vec_3 point_3;
 
-point_3* position(point_3 origin, vec_3 direction, double t){ // ez meg itt egy nagyon basic sugarkoveto
-    return _add(&origin, _mul(&t, &direction, 'd'));
+point_3* position(point_3 origin, vec_3 direction, double t){ // ez meg itt egy nagyon basic sugarkoveto    
+    static point_3 POS = {0, 0, 0};
+    point_3* u = &POS;
+    u = _add(&origin, _mul_s(t, &direction));
+    return u;
 }
 
 
