@@ -11,8 +11,10 @@ typedef struct {
 } vec_3;
 
 
-//egysegvektor
-vec_3 _zero(void); // csinal egy nullvektort
+//krealo fuggvenzek
+vec_3* _element(double s); // vektort csinal ugyan olyan elemekbol
+vec_3* _create(double x, double y, double z);
+
 //muveleti fuggvenyek
 vec_3* _add(vec_3* v, vec_3* w); //ket vektor osszeadasa
 vec_3* _neg(vec_3* v); // vektor elemenkenti negalasa
@@ -30,9 +32,22 @@ void _vec_print(vec_3 v); // kiirja a vektort
 
 // fuggvenyek kifelytese
 
-vec_3 _zero(void){ // ennek igazabol nincs nagyon ertelme
-    vec_3 v = {0.0, 0.0, 0.0};
-    return v;
+vec_3* _element(double s){ // egyseges elemekkel feltolti a vektort
+    static vec_3 ELEMENT = {0, 0, 0};
+    vec_3* u = &ELEMENT;
+    (*u).e[0] = s;
+    (*u).e[1] = s;
+    (*u).e[2] = s;
+    return u;
+}
+
+vec_3* _create(double x, double y, double z){ // kreal egy vektort
+    static vec_3 CREATE = {0, 0, 0};
+    vec_3* u = &CREATE;
+    (*u).e[0] = x;
+    (*u).e[1] = y;
+    (*u).e[2] = z;
+    return u;
 }
 
 vec_3* _neg(vec_3* v){ 
@@ -44,7 +59,7 @@ vec_3* _neg(vec_3* v){
     return u;
 }
 
-vec_3* _add(vec_3* v, vec_3* w){ // osszeadja a vektorokat helyben
+vec_3* _add(vec_3* v, vec_3* w){ // osszeadja a vektorokat
     static vec_3 ADD = {0, 0, 0};
     vec_3* u = &ADD;
         (*u).e[0] = (*v).e[0] + (*w).e[0];
