@@ -1,15 +1,31 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <math.h>
 
 #include "vec_3.h"
 #include "color.h"
 #include "ray.h"
 
+bool hit_sphere(point_3* sphere_center, double radius, point_3* origin, vec_3* direction){
+    double a = _dot(direction, direction);
+    double b = 2*_dot(direction, _add(sphere_center, _neg(origin)));
+    double c = _dot(_add(sphere_center, _neg(origin)), _add(sphere_center, _neg(origin))) - radius*radius;
+    double discriminant = b*b - 4*a*c;
+    return(discriminant >= 0); // egyet ad vissza ha a sugar beleutkozik a gombbe
+}
 
-color rar_color(void){ //!
-    vec_3 v;
-    v = _element(0);
-    return v;
+
+color* ray_color(vec_3* ray) {
+    vec_3* unit_ray = _unit_vec(ray);
+    double a = 0.5 * ((*unit_ray).e[1] + 1.0);
+    if(hit_sphere( _create(0., 0., 1.), 2., origin, ray )){ //todo: itt fogjuk hasznalni a ray structot (nem kell majd az origin)
+        return _create(1, 0, 0);
+    }
+    
+    return _add(
+        _mul_s((1.0 - a), _create(0., 0., 1.0)),
+        _mul_s(a, _create(1., 1., 1.0))
+    );
 }
 
 int main(void){
@@ -32,8 +48,8 @@ int main(void){
     vec_3 viewport_v = {0, -viewport_height, 0};
 
     // nezoport pixelvektorai
-    vec_3 delta_u = *(_mul_s((1/(double)image_width), &viewport_u)); 
-    vec_3 delta_v = *(_mul_s((1/(double)image_height), &viewport_v)); 
+    vec_3 delta_u = *(_mul_s((1/(double)image_width), &viewport_u)); // vizszintesen
+    vec_3 delta_v = *(_mul_s((1/(double)image_height), &viewport_v)); //fuggolegesen
 
     point_3 upper_left = *(_add( _add(_create(0.0, 0.0, focal_length), &camera_center), _mul_s(-0.5, _add(&viewport_u, &viewport_v))));
     point_3 kezdo_pix = *(_add(&upper_left, _mul_s(0.5, _add(&delta_u, &delta_v))));
@@ -61,12 +77,9 @@ int main(void){
         fflush(stderr);
         for(int i = 0; i < image_width; i++){
             point_3 pix = *(_add(&kezdo_pix, _add(_mul_s(i, &delta_u), _mul_s(j, &delta_v)))); // pixel koord
-            vec_3 ray_pix = *(_add(&pix, _neg(&camera_center))); // az a vektor ami a kamerabol a pixelbe megy
-            ray_color(); //!
-
-
-            //color szinecske = {(double)i/(double)(image_width - 1), (double)j/(double)(image_height - 1), 0}; 
-            _color_divider(szinecske, fp);            
+            vec_3 ray_vec = *(_add(&pix, _neg(&camera_center))); // az a vektor ami a kamerabol a pixelbe megy
+            
+            _color_divider(*(ray_color(&ray_vec)), fp);            
         }
     }
     fclose(fp);
