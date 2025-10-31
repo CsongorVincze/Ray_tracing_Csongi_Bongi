@@ -15,13 +15,12 @@ point_3* position(point_3 origin, vec_3 direction, double t){ // ez meg itt egy 
     return u;
 }
 
-//todo: kene egz typedef struct ami tartalmazza mind az origint mind a directiont
 
 
 typedef struct{
-    vec_3 dir;
     point_3 orig;
-}ray_3; //todo: ez nemtom h mukszik-e
+    vec_3 dir;
+}ray_3;
 
 
 #endif
