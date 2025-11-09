@@ -8,19 +8,19 @@
 
 typedef vec_3 point_3;
 
-point_3* position(point_3 origin, vec_3 direction, double t){ // ez meg itt egy nagyon basic sugarkoveto    
-    static point_3 POS = {0, 0, 0};
-    point_3* u = &POS;
-    u = _add(&origin, _mul_s(t, &direction));
+typedef struct{
+    point_3 orig;
+    vec_3 dir;
+}ray_3;
+
+point_3 _pos(ray_3 ray, double t){ // ez meg itt egy nagyon basic sugarkoveto    
+    vec_3 u;
+    u = _add(ray.orig, _mul_s(t, ray.dir));
     return u;
 }
 
 
 
-typedef struct{
-    point_3 orig;
-    vec_3 dir;
-}ray_3;
 
 
 #endif
