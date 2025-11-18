@@ -14,7 +14,7 @@ typedef struct{
     double radius;
 }sphere;
 
-bool hit_sphere(sphere sp, ray_3 ray, double tmin, double tmax){
+bool hit_sphere(sphere sp, ray_3 ray, double tmin, double tmax, hit_rec *hitdata){
     vec_3 oc = _add(sp.center, _neg(ray.orig));
     double a = _dot(ray.dir, ray.dir);
     double h = _dot(ray.dir, oc);
@@ -34,10 +34,10 @@ bool hit_sphere(sphere sp, ray_3 ray, double tmin, double tmax){
         }
     }
 
-    hit_rec hitdata;
-    hitdata.p = _pos(ray, root);
-    hitdata.normal = _mul_s(1/sp.radius, hitdata.p); //!
-    hitdata.t = root;
+
+    hitdata->p = _pos(ray, root);
+    hitdata->normal = _mul_s(1/sp.radius, _add(hitdata->p, _neg(sp.center))); //!
+    hitdata->t = root;
 
 
 

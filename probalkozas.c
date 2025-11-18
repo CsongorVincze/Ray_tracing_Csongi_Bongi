@@ -5,7 +5,11 @@
 #include "vec_3.h"
 #include "color.h"
 #include "ray.h"
+#include "hittable.h"
+#include "sphere.h"
 
+
+/*
 double hit_sphere(point_3 sphere_center, double radius, ray_3 ray){
     vec_3 oc = _add(sphere_center, _neg(ray.orig));
     double a = _dot(ray.dir, ray.dir);
@@ -19,18 +23,22 @@ double hit_sphere(point_3 sphere_center, double radius, ray_3 ray){
         return (h - sqrt(discriminant))/a;
     }
 }
+*/
 
 
-color ray_color(point_3 sphere_center, double radius, ray_3 ray) {
+color ray_color(sphere sp, ray_3 ray, hit_rec *hitdata) {
     vec_3 unit_ray = _unit_vec(ray.dir);
     double a = 0.5 * (unit_ray.e[1] + 1.0);
-    double t = hit_sphere(sphere_center, radius, ray);
+    if(hit_sphere(sp, ray, 0.0, 10.0, hitdata)){
+        return _mul_s(0.5, _add(_element(1.0), hitdata -> normal));
+    }
 
-
+    /*
     if(t > 0.0){ 
         vec_3 N = _unit_vec(_add(_pos(ray, t), _neg(sphere_center))); // itt nagyon draga a unitcev
         return _mul_s(0.5, _add(_element(1.0), N));
     }
+    */
     
     return _add(
         _mul_s((1.0 - a), _create(0., 0., 1.0)),
@@ -87,6 +95,12 @@ int main(void){
     printf("Innentol jon a rendes adat!");
 
     //itt most asszem csinalunk egy szines kepet
+    
+    sphere sp; //ez tarolja a gomb adatait
+    sp.center = _create(0.0, 0.0, 5.0);
+    sp.radius = 1.0;
+    hit_rec hitdata; // ebbe taroljuk majd a gombbel valo utk. adatait
+
     for(int j = 0; j < image_height; j++){
         fprintf(stderr, "\rProcessed lines: %d / %d", j+1, image_height);
         fflush(stderr);
@@ -94,7 +108,7 @@ int main(void){
             point_3 pix = _add(kezdo_pix, _add(_mul_s(i, delta_h), _mul_s(j, delta_v))); // pixel koord
             vec_3 ray_vec = _add(pix, _neg(camera_center)); // az a vektor ami a kamerabol a pixelbe megy
             ray_3 sugarka = {pix, ray_vec};
-            _color_divider(ray_color(_create(0.0, 0.0, 5.0), 1.0, sugarka), fp);            
+            _color_divider(ray_color(sp, sugarka, &hitdata), fp);            
         }
     }
     fclose(fp);
