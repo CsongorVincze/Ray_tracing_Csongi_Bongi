@@ -1,14 +1,10 @@
 #ifndef SPHERE
 #define SPHERE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
 
-#include "vec_3.h"
-#include "ray.h"
+#include "common_headers.h"
 #include "hittable.h"
+#include <time.h>
 
 
 typedef struct{
@@ -16,7 +12,7 @@ typedef struct{
     double radius;
 }sphere;
 
-bool hit_sphere(sphere sp, ray_3 ray, double tmin, double tmax, hit_rec *hitdata){
+bool hit_sphere(sphere sp, ray_3 ray, interval t_limits, hit_rec *hitdata){
     vec_3 oc = _add(sp.center, _neg(ray.orig));
     double a = _dot(ray.dir, ray.dir);
     double h = _dot(ray.dir, oc);
@@ -29,9 +25,9 @@ bool hit_sphere(sphere sp, ray_3 ray, double tmin, double tmax, hit_rec *hitdata
     double sqrtd = sqrt(discriminant);
     
     double root = (h - sqrtd)/a;
-    if(root <= tmin || root >= tmax){
+    if(!interval_surrounds(t_limits, root)){
         root = (h + sqrtd)/a;
-        if(root <= tmin || root >= tmax){
+        if(!interval_surrounds(t_limits, root)){
             return false;
         }
     }

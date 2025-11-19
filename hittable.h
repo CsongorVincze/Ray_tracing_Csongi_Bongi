@@ -1,12 +1,7 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include <stdio.h>
-#include <math.h>
-
-#include "vec_3.h"
-#include "color.h"
-#include "ray.h"
+#include "common_headers.h"
 
 typedef struct{
     point_3 p; // ebben taroljuk az eltalalt pontot

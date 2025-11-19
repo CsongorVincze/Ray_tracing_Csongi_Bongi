@@ -1,13 +1,15 @@
-#ifndef COMMON_HEADERS.H
-#define COMMON_HEADERS.H
+#ifndef COMMON_HEADERS_H
+#define COMMON_HEADERS_H
 
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "vec_3.h"
 #include "ray.h"
 #include "color.h"
+#include "intervals.h"
 
 const double infinity = INFINITY;
 const double pi = 3.1415926535897932385;

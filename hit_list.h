@@ -1,13 +1,7 @@
 #ifndef HIT_LIST
 #define HIT_LIST
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-
-#include "vec_3.h"
-#include "ray.h"
+#include "common_headers.h"
 #include "hittable.h"
 #include "sphere.h"
 
@@ -16,17 +10,17 @@
 // ha igen: visszater igazzal es a fuggvenynek megadott (hit_rec tipusu) closest_hit-et
 // beallitja a sugarral valo utkozesnek megfeleloen
 // ha nem: visszater hamissal
-bool which_hit(sphere* sp_array, int num_spheres, ray_3 ray, double tmin, double tmax, hit_rec* closest_hit){
+bool which_hit(sphere* sp_array, int num_spheres, ray_3 ray, interval t_limits, hit_rec* closest_hit){
     hit_rec try_hit;
-    double T = tmax;
+    double T = t_limits.max;
     for(int i = 0; i < num_spheres; i++){
-        if(hit_sphere(sp_array[i], ray, tmin, tmax, &try_hit)){
+        if(hit_sphere(sp_array[i], ray, t_limits, &try_hit)){
             try_hit.t < T;
             T = try_hit.t;
             *(closest_hit) = try_hit; //? remelem ez mukodik
         }
     }
-    if(T != tmax){
+    if(T != t_limits.max){
         return true;
     }
     return false;

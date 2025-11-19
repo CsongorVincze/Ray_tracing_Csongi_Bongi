@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <math.h>
-
-#include "vec_3.h"
-#include "color.h"
-#include "ray.h"
+#include "common_headers.h"
 #include "hittable.h"
 #include "sphere.h"
 #include "hit_list.h"
@@ -13,7 +7,7 @@
 // ez a fuggveny szinez ki egy pixelt
 color ray_color(sphere* sp_array, int num_spheres, ray_3 ray, hit_rec *hitdata) {
     
-    if(which_hit(sp_array, num_spheres, ray, 0.0, 20.0, hitdata)){
+    if(which_hit(sp_array, num_spheres, ray, (interval){.min = 0.0, .max = 20.0}, hitdata)){
         return _mul_s(0.5, _add(_element(1.0), hitdata -> normal));
     }
     
