@@ -2,8 +2,8 @@
 #define COMMON_HEADERS_H
 
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 #include <stdbool.h>
 
 #include "vec_3.h"

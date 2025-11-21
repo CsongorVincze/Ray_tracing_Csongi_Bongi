@@ -41,7 +41,7 @@ bool hit_sphere(sphere sp, ray_3 ray, interval t_limits, hit_rec *hitdata){
 }
 
 // gomboket csinalunk random parameterekkel
-void _rand_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
+void _array_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
     srand(time(NULL));
     for(int i = 0; i < num_spheres; i++){
         double i_d = (double) i;
@@ -49,6 +49,22 @@ void _rand_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
         sp_array[i].center.e[1] = 0.0;              //((rand() % 10) + 5)/2;
         sp_array[i].center.e[2] = 5.0;             //((rand() % 10) + 5)/2;
         sp_array[i].radius =  1.0;              //((rand() % 10) + 5)/10;
+    }
+}
+
+void _rand_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
+    srand(time(NULL));
+    for(int i = 0; i < num_spheres; i++){
+        double i_d = (double) i;
+        sp_array[i].center.e[0] = (double)((rand() % 10) - 5)/2;
+        sp_array[i].center.e[1] = (double)((rand() % 10) + 5)/10;
+        sp_array[i].center.e[2] = (double)((rand() % 10) + 10)/2;
+        sp_array[i].radius = (double)((rand() % 10) + 5)/15;
+
+        // printf("\nsp_array[%d].center.e[0]: %lf\n", i, sp_array[i].center.e[0]);
+        // printf("sp_array[%d].center.e[1]: %lf\n", i, sp_array[i].center.e[1]);  
+        // printf("sp_array[%d].center.e[2]: %lf\n", i, sp_array[i].center.e[2]);  
+        // printf("sp_array[%d].radius: %lf\n", i, sp_array[i].radius);            
     }
 }
 

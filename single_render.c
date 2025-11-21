@@ -52,10 +52,10 @@ int main(void){
     FILE *fp;
     fp = fopen(nev, "w");
     fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
-    printf("Innentol jon a rendes adat!");
+    printf("Innentol jon a rendes adat!\n");
     
     //letrehozzuk a gomboket
-    int num_spheres = 3;
+    int num_spheres = 10;
     sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
 
