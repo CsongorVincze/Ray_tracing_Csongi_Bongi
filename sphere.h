@@ -45,10 +45,10 @@ void _array_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
     srand(time(NULL));
     for(int i = 0; i < num_spheres; i++){
         double i_d = (double) i;
-        sp_array[i].center.e[0] = -3.0 + i_d;               //((rand() % 10) + 5)/2;
-        sp_array[i].center.e[1] = 0.0;              //((rand() % 10) + 5)/2;
-        sp_array[i].center.e[2] = 5.0;             //((rand() % 10) + 5)/2;
-        sp_array[i].radius =  1.0;              //((rand() % 10) + 5)/10;
+        sp_array[i].center.e[0] = -3.0 + i_d;
+        sp_array[i].center.e[1] = 0.0;
+        sp_array[i].center.e[2] = 5.0;
+        sp_array[i].radius =  1.0;
     }
 }
 

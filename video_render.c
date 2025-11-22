@@ -9,6 +9,7 @@
 #include "hittable.h"
 #include "sphere.h"
 #include "hit_list.h"
+#include "animation.h"
 
 
 // ez a fuggveny szinez ki egy pixelt
@@ -29,7 +30,7 @@ color ray_color(sphere* sp_array, int num_spheres, ray_3 ray, hit_rec *hitdata) 
 int main(void){
     
     //kep meretek
-    int image_width = 388;
+    int image_width = 2*1024;
     int image_height;
     double aspect_ratio = 16.0/9.0;
     image_height = (int)(image_width / aspect_ratio);
@@ -55,6 +56,11 @@ int main(void){
 
     
     
+    //letrehozzuk a gomboket
+    int num_spheres = 10;
+    sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
+    _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
+
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
     int num_frames = 100;
     for(int k = 0; k < num_frames; k++){
@@ -68,10 +74,6 @@ int main(void){
         fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
         // printf("Innentol jon a rendes adat!\n");
         
-        //letrehozzuk a gomboket
-        int num_spheres = 10;
-        sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
-        _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
 
         
         
@@ -89,6 +91,10 @@ int main(void){
         }
         fclose(fp);
         fprintf(stderr, "\nFrame %d: Done.\n", k);
+
+
+        // harm_osc_y(sp_array, num_spheres, 0.2, 0.3, k+1 );
+        random_walk(sp_array, num_spheres);
 
         
     }
