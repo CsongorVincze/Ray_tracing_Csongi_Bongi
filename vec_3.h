@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 // itt csinalom meg a vec_3 "tipust"
 #ifndef VEC_3_H
@@ -109,7 +110,7 @@ double _dot(vec_3 v, vec_3 w){
 }
 
 double _length(vec_3 v){
-    return sqrt(v.e[0] * v.e[0] + v.e[1] * v.e[1] + v.e[2] * v.e[2]);
+    return sqrt(_dot(v, v));
 }
 
 vec_3 _unit_vec(vec_3 v){
@@ -124,4 +125,44 @@ vec_3 _unit_vec(vec_3 v){
 void _vec_print(vec_3 v){
     printf("%.5f %.5f %.5f\n", v.e[0], v.e[1], v.e[2]);
 }
+
+// 0 es 1 kozott kaunk egy random szamot
+static inline double rand_01(){
+    srand(time(NULL));
+    return (double)rand() / ((double)RAND_MAX + 1.0);
+}
+
+static inline double rand_mm(double min, double max){
+    return min + (max - min) * rand_01();
+}
+
+vec_3 _rand_vec_01(){
+    return _create(rand_01(), rand_01(), rand_01());
+}
+
+vec_3 _rand_vec_mm(double min, double max){ //? ugyan olyan neven hivom oket
+    return _create(rand_mm(min, max), rand_mm(min, max), rand_mm(min, max));
+}
+
+// ez egy random iranyu egysegvektor
+vec_3 _rand_unit_vec(){
+    while(true){
+        vec_3 v = _rand_vec_01();
+        if(1e-100 < _dot(v,v) && _dot(v, v) <= 1){
+            return _unit_vec(v);
+        }
+    }
+}
+
+// visszaadjunk egy olyan random vektort ami a gomb "kulso oldalan" van
+vec_3 _unit_vec_on_hemisphere(vec_3 normal){
+    vec_3 u = _rand_unit_vec();
+    if(_dot(normal, u) > 0){
+        return u;
+    }
+    else{
+        return _neg(u);
+    }
+}
+
 #endif

@@ -10,59 +10,49 @@
 #include "sphere.h"
 #include "hit_list.h"
 #include "animation.h"
+#include "render.h"
 
 
-// ez a fuggveny szinez ki egy pixelt
-color ray_color(sphere* sp_array, int num_spheres, ray_3 ray, hit_rec *hitdata) {
-    
-    if(which_hit(sp_array, num_spheres, ray, (interval){.min = 0.0, .max = 20.0}, hitdata)){
-        return _mul_s(0.5, _add(_element(1.0), hitdata -> normal));
-    }
-    
-    vec_3 unit_ray = _unit_vec(ray.dir);
-    double a = 0.5 * (unit_ray.e[1] + 1.0);
-    return _add(
-        _mul_s((1.0 - a), _create(0., 0., 1.0)),
-        _mul_s(a, _create(1., 1., 1.))
-    );
-}
 
 int main(void){
     
     //kep meretek
-    int image_width = 2*1024;
+    int image_width = 1024/4;
     int image_height;
     double aspect_ratio = 16.0/9.0;
-    image_height = (int)(image_width / aspect_ratio);
-    image_height = (image_height < 1) ? 1 : image_height; // biztositja h legyen mindig min 1 magassagu
 
     // nezoportal meretek
     double focal_length = 3.0;
     double viewport_height = 2.0; 
-    double viewport_width = viewport_height * (double)(image_width)/(double)(image_height);
+    double viewport_width;
     point_3 camera_center = {0., 0., 0.};
 
     // nezoport szelein levo vektorok
-    vec_3 viewport_h = {viewport_width, 0, 0};
-    vec_3 viewport_v = {0, -viewport_height, 0};
+    vec_3 viewport_h;
+    vec_3 viewport_v;
 
     // nezoport pixelvektorai
-    vec_3 delta_h = _mul_s((1/(double)image_width), viewport_h); // vizszintesen
-    vec_3 delta_v = _mul_s((1/(double)image_height), viewport_v); //fuggolegesen
+    vec_3 delta_h;
+    vec_3 delta_v;
 
-    point_3 upper_left = _add( _add(_create(0.0, 0.0, focal_length), camera_center), _mul_s(-0.5, _add(viewport_h, viewport_v)));
-    point_3 kezdo_pix = _add(upper_left, _mul_s(0.5, _add(delta_h, delta_v)));
+    point_3 upper_left;
+    point_3 kezdo_pix;
+
+    viewport_creator(image_width, &image_height, aspect_ratio, focal_length, viewport_height, &viewport_width, camera_center, &viewport_h,
+                    &viewport_v, &delta_h, &delta_v, &upper_left, &kezdo_pix);
+
+    int max_pattogas = 10;
 
 
     
     
     //letrehozzuk a gomboket
-    int num_spheres = 10;
+    int num_spheres = 1;
     sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
-    int num_frames = 100;
+    int num_frames = 50;
     for(int k = 0; k < num_frames; k++){
         
 
@@ -74,22 +64,9 @@ int main(void){
         fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
         // printf("Innentol jon a rendes adat!\n");
         
+        render(image_width, image_height, camera_center, delta_h, delta_v, kezdo_pix, sp_array, num_spheres, fp);
 
-        
-        
-        // vegigiteralunk az egesz nezoportalunkon
-        for(int j = 0; j < image_height; j++){
-            // fprintf(stderr, "\rProcessed lines: %d / %d", j+1, image_height);
-            // fflush(stderr);
-            for(int i = 0; i < image_width; i++){
-                point_3 pix = _add(kezdo_pix, _add(_mul_s(i, delta_h), _mul_s(j, delta_v))); // pixel koord
-                vec_3 ray_vec = _add(pix, _neg(camera_center)); // az a vektor ami a kamerabol a pixelbe megy
-                ray_3 sugarka = {pix, ray_vec};
-                hit_rec hitdata;
-                _color_divider(ray_color(sp_array, num_spheres, sugarka, &hitdata), fp);            
-            }
-        }
-        fclose(fp);
+
         fprintf(stderr, "\nFrame %d: Done.\n", k);
 
 
@@ -100,8 +77,6 @@ int main(void){
     }
     
     //szolunk az op rendszernek h legyszi futtassa terminalba ezeket a parancsokat
-    //ezzel a libix264-el fuzze ossze a kepeimet es csinaljon vidit belole
-    // system("ffmpeg -y -framerate 30 -i Frame_%03d.ppm -c:v libx264 -pix_fmt yuv420p vidi.mp4");
     system("ffmpeg -y -framerate 30 -i Frame_%03d.ppm -c:v wmv2 -b:v 2000k vidi.wmv");
     
 
