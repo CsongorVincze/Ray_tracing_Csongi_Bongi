@@ -35,8 +35,9 @@ void viewport_creator(int image_width, int* image_height, double aspect_ratio, d
 color ray_color(sphere sp_array[], int num_spheres, ray_3 ray, hit_rec *hitdata) {// itt mi a tokom van
     
     if(which_hit(sp_array, num_spheres, ray, (interval){.min = 0.0, .max = 20.0}, hitdata)){
-        // vec_3 direction = _unit_vec_on_hemisphere();
-        return _mul_s(0.5, _add(_element(1.0), hitdata -> normal));
+        vec_3 direction = _unit_vec_on_hemisphere(hitdata->normal);
+        ray_3 new_ray = {.dir=hitdata->normal, .orig=direction};
+        return _mul_s(0.5, ray_color(sp_array, num_spheres, new_ray, hitdata));
     }
     
     vec_3 unit_ray = _unit_vec(ray.dir);

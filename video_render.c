@@ -17,7 +17,7 @@
 int main(void){
     
     //kep meretek
-    int image_width = 1024/4;
+    int image_width = 1024;
     int image_height;
     double aspect_ratio = 16.0/9.0;
 
@@ -47,7 +47,7 @@ int main(void){
     
     
     //letrehozzuk a gomboket
-    int num_spheres = 1;
+    int num_spheres = 5;
     sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
 
