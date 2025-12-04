@@ -54,7 +54,7 @@ void _array_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
 
 void _rand_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
     srand(time(NULL));
-    for(int i = 0; i < num_spheres; i++){
+    for(int i = 1; i < num_spheres; i++){
         double i_d = (double) i;
         sp_array[i].center.e[0] = (double)((rand() % 10) - 5)/2;
         sp_array[i].center.e[1] = (double)((rand() % 10) + 5)/10;

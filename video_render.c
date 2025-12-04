@@ -49,6 +49,9 @@ int main(void){
     //letrehozzuk a gomboket
     int num_spheres = 5;
     sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
+
+    sp_array[0].center = _create(0.0, -100.0, 6.0);
+    sp_array[0].radius = 100.0;
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
@@ -70,8 +73,8 @@ int main(void){
         fprintf(stderr, "\nFrame %d: Done.\n", k);
 
 
-        // harm_osc_y(sp_array, num_spheres, 0.2, 0.3, k+1 );
-        random_walk(sp_array, num_spheres);
+        harm_osc_y(sp_array, num_spheres, 0.2, 0.3, k+1 );
+        // random_walk(sp_array, num_spheres);
 
         
     }
