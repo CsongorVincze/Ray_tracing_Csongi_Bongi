@@ -12,8 +12,6 @@
 #include "animation.h"
 #include "render.h"
 
-
-
 int main(void){
     
     //kep meretek
@@ -48,14 +46,19 @@ int main(void){
     
     //letrehozzuk a gomboket
     int num_spheres = 5;
+    
+    printf("How many spheres do you want?\n");
+    int a;
+    scanf("%d", &a);
+    num_spheres = a; // itt valamiert nem mukodott ha kapasbol a num_spheres-be olvastam be
+    
     sphere sp_array[num_spheres]; //todo: ez majd kesobb lehetne rendesen object array
-
     sp_array[0].center = _create(0.0, -100.0, 6.0);
     sp_array[0].radius = 100.0;
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
-    int num_frames = 50;
+    int num_frames = 10;
     for(int k = 0; k < num_frames; k++){
         
 
