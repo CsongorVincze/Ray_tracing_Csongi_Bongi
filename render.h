@@ -30,7 +30,7 @@ void viewport_creator(int image_width, int* image_height, double aspect_ratio, d
 
 
 
-// ez a fuggveny szinez ki egy pixelt
+// ez a fuggveny szinez ki egy pixelt mert az jó
 
 color ray_color(sphere sp_array[], int num_spheres, ray_3 ray, hit_rec *hitdata) {// itt mi a tokom van
     
