@@ -37,7 +37,7 @@ color ray_color(sphere sp_array[], int num_spheres, ray_3 ray, hit_rec *hitdata)
     if(which_hit(sp_array, num_spheres, ray, (interval){.min = 0.0, .max = 20.0}, hitdata)){
         vec_3 direction = _unit_vec_on_hemisphere(hitdata->normal);
         ray_3 new_ray = {.dir=hitdata->normal, .orig=direction};
-        return _mul_s(0.5, ray_color(sp_array, num_spheres, new_ray, hitdata));
+        return _mul_s(0.9, ray_color(sp_array, num_spheres, new_ray, hitdata)); //todo: itt el kell tudjuk erni azt h milyen vilagosak legyenek a gombok
     }
     
     vec_3 unit_ray = _unit_vec(ray.dir);

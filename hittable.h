@@ -24,12 +24,6 @@ void hit_side(hit_rec* blabla, ray_3 ray){
 
 
 
-typedef struct{ //? ezt lehet osszerakhatnam az elozo structal
-    bool hit; // talalt-e? 
-} hittable;
-
-
-
 
 
 #endif

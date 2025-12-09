@@ -15,9 +15,10 @@ bool which_hit(sphere* sp_array, int num_spheres, ray_3 ray, interval t_limits, 
     double T = t_limits.max;
     for(int i = 0; i < num_spheres; i++){
         if(hit_sphere(sp_array[i], ray, t_limits, &try_hit)){
-            try_hit.t < T;
+        if(try_hit.t < T){
             T = try_hit.t;
             *(closest_hit) = try_hit; //? remelem ez mukodik
+        }
         }
     }
     if(T != t_limits.max){
@@ -25,12 +26,6 @@ bool which_hit(sphere* sp_array, int num_spheres, ray_3 ray, interval t_limits, 
     }
     return false;
 }
-
-
-
-// todo: valahogy meg lehetne csinalni h lekerdezzuk egy altalanos objektum 
-// todo: adattipusat es hozzacsatoljuk a megfelelo hit functiont, igy tobbfele
-// todo: objektumot le tudunk renderelni
 
 
 

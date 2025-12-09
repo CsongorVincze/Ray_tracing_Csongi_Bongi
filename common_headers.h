@@ -14,6 +14,7 @@
 
 const double infinity = INFINITY;
 const double pi = 3.1415926535897932385;
+//todo: itt amit nem hasznalunk egyaltalan azt toroljuk ki
 
 static inline double _deg_to_rad(double deg){
     return deg/180.0 * pi;
