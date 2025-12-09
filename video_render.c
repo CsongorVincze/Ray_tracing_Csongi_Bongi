@@ -15,6 +15,7 @@
 
 int main(void){
     
+    printCaption();
 
 
     //kep meretek
@@ -84,7 +85,10 @@ int main(void){
     int num_frames = 100;
     printf("Milyen hosszu videot szeretnel? (a video 30fps-en fut, ajanlott: 1-10, egesz szam elfogadott) / How long video do you want? (video is running on 30 fps, recomended: 1-10, intiger value accepted)\n");
     int seconds;
-    scanf("%d", &seconds);
+    while(scanf("%d", &seconds) != 1 || seconds < 1 || seconds > 10){
+        fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");
+        while(getchar() != '\n');
+    }
     num_frames = 30*seconds;
 
     // ezekkel fogjuk kovetni a program elorehaladasat es kiirni a felhasznalonak
@@ -100,7 +104,10 @@ int main(void){
         char nev[12];
         sprintf(nev, "Frame_%03d.ppm", k);
         FILE *fp;
-        fp = fopen(nev, "w");
+        if( (fp = fopen(nev, "w")) == NULL){
+            printf("Hiba a fajl megnyitasakor! / Error when opening the file!");
+            return 1;
+        }
         fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
         // printf("Innentol jon a rendes adat!\n");
         
@@ -123,11 +130,12 @@ int main(void){
     }
     printf("\nDone.\n");
     
-    //szolunk az op rendszernek h legyszi futtassa terminalba ezeket a parancsokat
+    // szolunk az op rendszernek h legyszi futtassa terminalba ezeket a parancsokat
+    // ez fuzi ossze a kepeket videova
     system("ffmpeg -y -framerate 30 -i Frame_%03d.ppm -c:v wmv2 -b:v 2000k vidi.wmv");
     
 
-    //mostant kirolhetjuk a kepeket
+    // mostant kirolhetjuk a kepeket
     system("del Frame_*.ppm");
 
     //nezzuk meg a vidit
