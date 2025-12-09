@@ -22,10 +22,12 @@ int main(void){
     int image_height;
     double aspect_ratio = 16.0/9.0;
 
+    //itt bekerjuk a felbontast; pontosabban hogy hany pixel szeles legyenek a kepek
+    // a dupla while-os modszerrel megadakalyozom hogy helytelen adat keruljon be
     printf("Milyen felbontast szeretnel? (szelesseg pixelekben) (elfogadhato ertekek: 2^n, ahol n egesz es 4 < n < 11)\n");
     printf("Enter a resolution (width in pixels) (acceptable inputs: 2^n, where n is an intiger and 4 < n < 11)\n");
     while(scanf("%d", &image_width) != 1 || image_width % 2 != 0 || image_width < 32 || image_width > 1024){
-        printf("Helytelen formatum! / Incorrect format!\n");
+        printf("Helytelen formatum! / Incorrect format!\n"); //todo ezt itt ujrairni
         while(getchar() != '\n');
     }
 
@@ -59,13 +61,18 @@ int main(void){
     
     printf("Hany gombot szeretnel? (ajanlott: 2-10) / How many spheres do you want? (recomended: 2-10)\n");
     int a;
-    scanf("%d", &a);
+    // itt limitaltam a gombok szamat 50-re mivel mar igy is nagyon lassu volt
+    // a dupla while-os modszerrel megadakalyozom hogy helytelen adat keruljon be
+    while(scanf("%d", &a) != 1 || a < 0 || a > 50){
+        printf("Helytelen formatum! / Incorrect format!\n");
+        while(getchar() != '\n');
+    }
     num_spheres = a+1; // itt valamiert nem mukodott ha kapasbol a num_spheres-be olvastam be
     
     // dinamikusan allokalunk memoriat a gomboknek
     sphere* sp_array = (sphere*) malloc(sizeof(sphere) * num_spheres);
     if(sp_array == NULL){
-        fprintf(stderr, "A memoria allokaico nem sikerult! / Memory allocation failed");
+        fprintf(stderr, "A memoria allokaico nem sikerult! / Memory allocation failed\n");
         return 1;
     }
 
@@ -80,6 +87,12 @@ int main(void){
     scanf("%d", &seconds);
     num_frames = 30*seconds;
 
+    // ezekkel fogjuk kovetni a program elorehaladasat es kiirni a felhasznalonak
+    double progress_now = 0;
+    double progress_old = 0;
+    printf("Status bar: 0.............................................100\n");
+    printf("Progress:   ");
+
     for(int k = 0; k < num_frames; k++){
         
 
@@ -93,8 +106,14 @@ int main(void){
         
         render(image_width, image_height, camera_center, delta_h, delta_v, kezdo_pix, sp_array, num_spheres, fp);
 
+        // ez egy alternativ modszer a program elorehaladasat kovetni
+        // fprintf(stderr, "\nFrame %d: Done.\n", k);
 
-        fprintf(stderr, "\nFrame %d: Done.\n", k);
+        progress_old = progress_now;
+        progress_now = (double) (50.0 * k / num_frames);
+        if( (int) progress_now > (int) progress_old ){
+            fprintf(stderr, "/");
+        }
 
 
         harm_osc_y(sp_array, num_spheres, 0.2, 0.3, k+1 );
@@ -102,6 +121,7 @@ int main(void){
 
         
     }
+    printf("\nDone.\n");
     
     //szolunk az op rendszernek h legyszi futtassa terminalba ezeket a parancsokat
     system("ffmpeg -y -framerate 30 -i Frame_%03d.ppm -c:v wmv2 -b:v 2000k vidi.wmv");
