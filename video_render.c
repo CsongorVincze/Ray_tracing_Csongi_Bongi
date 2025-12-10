@@ -1,10 +1,3 @@
-//EZ IGAZABOL UGYAN AZT CSINALJA MINT A STATIKUS CSAK TOBB KEPET GENERAL ES UGYESEN OSSZEFUZI
-
-
-
-
-
-
 #include "common_headers.h"
 #include "hittable.h"
 #include "sphere.h"
@@ -96,9 +89,9 @@ int main(void){
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
     int num_frames = 100;
-    printf("Milyen hosszu videot szeretnel? (a video 30fps-en fut, 1-10 kozotti egesz szam elfogadott) / How long video do you want? (video is running on 30 fps, intiger value between 1 and 10 is acceptable)\n");
+    printf("Milyen hosszu videot szeretnel? (a video 30fps-en fut, 4-14 kozotti egesz szam elfogadott) / How long video do you want? (video is running on 30 fps, intiger value between 4 and 14 is acceptable)\n");
     int seconds;
-    while(scanf("%d", &seconds) != 1 || seconds < 1 || seconds > 10){
+    while(scanf("%d", &seconds) != 1 || seconds < 4 || seconds > 10){
         fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");
         while(getchar() != '\n');
     }
@@ -112,7 +105,6 @@ int main(void){
 
     for(int k = 0; k < num_frames; k++){
         
-
         // fileba iras
         char nev[12];
         sprintf(nev, "Frame_%03d.ppm", k);
@@ -139,9 +131,8 @@ int main(void){
         harm_osc_y(sp_array, num_spheres, 0.2, 0.3, k+1 );
         // random_walk(sp_array, num_spheres);
 
-        
     }
-    printf("\nDone.\n");
+    printf("\nKész. / Done.\n");
     
     // szolunk az op rendszernek h legyszi futtassa terminalba ezeket a parancsokat
     // ez fuzi ossze a kepeket videova
@@ -154,8 +145,7 @@ int main(void){
     //nezzuk meg a vidit
     system("start vidi.wmv");
 
-
-
+    // felszabaditjuk a dinamikus tombot
     free(sp_array);
 
     return 0;

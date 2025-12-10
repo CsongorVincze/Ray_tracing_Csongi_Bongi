@@ -26,47 +26,48 @@
 % --- DOCUMENT BEGINS HERE ---
 \begin{document}
 
-% 1. Create Title Page
+
 \maketitle
 
-% 2. Create Table of Contents
 \tableofcontents
 \newpage
 
-% 3. Main Content
+
 \section{A program ismertetése, áttekintése}
 Ez a program egy nagyon alapvető sugárkövetőt (ray tracer) implementál le.
 A lényege, a virtuális kamerából (ahonnét mi a képet látjuk) sugarakat küld,
-és ezeknek a sugaraknak a gömbökkel való ütközöését követi.
+és ezeknek a sugaraknak a gömbökkel való ütközését követi.
 Miután a felhasználó megadja a megfelelő paramétereket a program elkezdi a képkockák
 generálását. A képkockák generálásának előrehaladását közben a felhasználó egy 
 folyamatjelző sávon követheti. Amint az összes képkocka generálása megtörtént
 a szoftver összefűzi a képkockákat egy videóvá, és ezt el is indítja.
+A program és a hozzá tartózó dolgok elérhetőek a:
+\url{https://github.com/CsongorVincze/Ray_tracing_Csongi_Bongi} linken.
 
 \section{Nyelv, használt csomagok, kiegészítők}
 A teljes projekt C nyelvben íródott, az alapvető C könyvtárak felhasználásával,
 minden külső csomag nélkül. A program nagy vonalakban a \url{https://raytracing.github.io/books/RayTracingInOneWeekend.html#overview}
 dokumentációt követi (természetesen C nyelvre átírva).
 
-\section{Az arhitektura áttekintése, a program kezelése}
+\section{Az architektúra áttekintése, a program kezelése}
 A \texttt{video\_render.exe} futtatásakor a program bekéri a videó
-elkészítéséhez szükéges adatokat. Ezek sorba:
+elkészítéséhez szükséges adatokat. Ezek sorban:
 \begin{enumerate}
     \item Milyen felbontást szeretnél? (szélesség pixelekben) (elfogadható értékek: $2^n$, ahol $n$ egész és $4 < n < 11$)
-    \item Hány gömbot szeretnél? (ajánlott: 2-10)
+    \item Hány gömböt szeretnél? (ajánlott: 2-10)
     \item Milyen hosszú videót szeretnél? (a videó 30fps-en fut, 1-10 közötti egész szám elfogadott)
 \end{enumerate}
 
-Az első bemenet a kép vízszíntes pixelszámát adja meg (a képarány 16:9). Itt 1024-nél már jelentősen
+Az első bemenet a kép vízszintes pixelszámát adja meg (a képarány 16:9). Itt 1024-nél már jelentősen
 lelassul a program. 256-nál viszont még elég alacsony lesz a készített videó minősége.
 Érdemes lehet ezt az értéket 512-re állítani. Ezzel az adattal a program
 már el tudja készíteni az ún. nézőportált (viewport), ami meghatározza, hogy mit, hogy fogunk látni. A többi paraméter
 fix. A \texttt{viewport\_creator} függvény végzi ezt a folyamatot, és a \texttt{video\_render.c} hívja meg a \texttt{render.h}-ból.
 A gömbök száma egészen 0-tól 50-ig terjedhet. Ennek ellenére nem ajánlott 10-nél
 többet megadni mivel ez is jelentősen lelassítja a programot. A gömbökre van egy külön struktúra (sphere), egy ilyen tömböt hozunk
-létre. A a videó készítés közben mozgatni fogjuk a gömböket. Mivel csak gömb alakú objektumokkat dolgozunk,
+létre. A videó készítés közben mozgatni fogjuk a gömböket. Mivel csak gömb alakú objektumokkal dolgozunk,
 így érdemes ennek a tömbnek az elejére egy előre beállított nagy gömböt rakni, hogy
-legyen egy földünk a videókhoz. Így valójában egyel több gömbbel operálunk mintamennyit bekértünk.
+legyen egy földünk a videókhoz. Így valójában egyel több gömbbel operálunk mint amennyit bekértünk.
 A harmadik bekérésnél hasonló
 okokból kiindulva 5 körüli értéket érdemes megadni. Mivel konstans 30 fps-el dolgozunk így csak simán visszaszámoljuk,
 hogy hány képkockát kell legeneráljunk.
@@ -74,13 +75,14 @@ hogy hány képkockát kell legeneráljunk.
 
 \section{Fájlok és azok leírásaik}
 A program egy fő .c fájlból és 10 header fájlból áll. A header fájlok főleg a program egyes részeihez
-biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
+biztosítanak függvényeket. Minden fájl ugyanabban a mappában van.
+
 
     \subsection{vec\_3.h}
     Mivel 3 dimenzióban dolgozunk szükségünk van vektoroperációkra.
     Ez a fájl biztosítja ezek meglétét. A fájlban minden függvény mellé fel van tüntetve, hogy mit csinál,
     így ezt nem részletezem itt. Ez a fájl tartalmazza a \texttt{vec\_3.h} struktúrát is ami, lényegében egy 3 dimenziós vektor típus.
-    Ez a struktúra nagyon sokat könnyít a vekorok kezelésén.
+    Ez a struktúra nagyon sokat könnyít a vektorok kezelésén.
 
     \subsection{ray.h}
     Ez a rész csupán a sugár (ray) struktúrát és egz sugárkövetőt tartalmazza.
@@ -93,12 +95,11 @@ biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
     
 
     \subsection{sphere.h}
-    Ez a fájl a gömb struktúrát hozza létre. A gömb egy középpontból és egz sugárból áll.
-    Ezután a \texttt{hit\_sphere} függvény következik ami, lényegileg eldönti, hogy az adott sugár eltalálta-e az adott gömböt.
+    Ez a fájl a gömb struktúrát hozza létre. A gömb egy középpontból és egy sugárból áll.
+    Ezután a \texttt{hit\_sphere} függvény következik ami, lényegében eldönti, hogy az adott sugár eltalálta-e az adott gömböt.
     Ez a függvény egy bináris értéket ad vissza. Emellett kiszámolja, hogy hol történt a találat, milyen hosszú
-    volt a sugár, és a találatnál a gömb normálvektorát. Ezeket elmenit
+    volt a sugár, és a találatnál a gömb normálvektorát. Ezeket elmenti
     egy pointerrel inputként megadott \texttt{hit\_rec} struktúrába.
-    %itt ezt ki kell felyteni es csekkolni
     Ezt két függvény követi; az \texttt{\_array\_spheres} és a \texttt{\_rand\_spheres}. Előbbi egy vízszintes sorba rak le gömböket.
     Ez inkább a teszteléshez, paraméterek állításához használandó.
     Útóbbi pedig (bizonyos korlátok kötött) random paraméterekkel rakja le a gömböket.
@@ -139,7 +140,7 @@ biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
 
     \subsection{common\_headers.h}
     Ez igazából csak arra jó, hogy ne kelljen folyton az összes header fájlt cipelni,
-    ebbe belerakjuk őket és ezt "icludoljuk". Emellett a program megnyitását követően
+    belerakjuk őket és ezt "includoljuk". Emellett a program megnyitását követően
     felugró felirat kiírására itt tároljuk a függvényt. (A többi dolog ami még itt van
     nem olyan fontos.)
 
@@ -154,23 +155,23 @@ biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
     \subsection{render.h}
     Itt először létrehozzuk a kamera és a  nézőportál (viewport) paramétereit, a \texttt{viewport\_creator}
     fügvénnyel. A fix képarányból és a kép szélességéből kiszámoljuk a 
-    kép magasságát. Utána pedig a nézőportált (lényegileg a kiküldött sugaraknak ad egz korlátot
+    kép magasságát. Utána pedig a nézőportált (lényegileg a kiküldött sugaraknak ad egy korlátot
     hogy az egész térből mit lásson). Ezután kiszámoljuk a kis vektorokat amiket
     majd hozzáadogatunk a bal felső pixelhez, így jutunk el az összes pixelhez.
     Végül pedig kiszámoljuk a bal felső pixel (és a bal felső csúcs) koordinátáit.
 
     Ezután jön a \texttt{ray\_color} függvény. Ez egy rekurzív függvény ami először
-    megnézi hogy az adott irányba indított sugár talált-e (meghívja a \texttt{which\_hit} függvényt)
-    Ha volt találat akkor meghívja magát ujra (a rekurziós szám 20-ra van állítva)
+    megnézi hogy az adott irányba indított sugár talált-e (meghívja a \texttt{which\_hit} függvényt).
+    Ha volt találat akkor meghívja magát újra (a rekurziós szám 20-ra van állítva)
     a gömb találati pontjáról a gömbtől elfelé
     random irányba mutató irányvektorral (itt a \texttt{vec\_3}-ból hívja meg a 
     \texttt{\_unit\_vec\_on\_hemisphere} függvényt), és a gömb adott pontjával
-    (ezeket berakja egy \texttt{ray\_3 struktúrába}), és a végül
-    visszakapott értéket megszorozza a \texttt{reflection\_number}-el (lényegileg az, hogy
-    a színnek hányad részét adja vissza). Amennyiben nem volt találat a háttár színét
-    adja vissza. Ha elertuk a rekurziós számnyi "pattogást" akkor feketét adunk vissza.
+    (ezeket berakja egy \texttt{ray\_3} struktúrába), és végül a
+    visszakapott értéket megszorozza a \texttt{reflection\_number}-rel (lényegében az, hogy
+    a színnek hányad részét adja vissza). Amennyiben nem volt találat a háttér színét
+    adja vissza. Ha elértük a rekurziós számnyi "pattogást" akkor feketét adunk vissza.
 
-    Ezt egy rövid függvény követi; \texttt{rand\_square()} amit az x-y síkon a (-0.5 --- 0.5)x(-0.5 --- 0.5) területen 
+    Ezt egy rövid függvény követi; \texttt{rand\_square()} ami az x-y síkon a (-0.5 --- 0.5)x(-0.5 --- 0.5) területen 
     visszaad egy random vektort (z komponens mindig 0).
 
     Végezetül a render függvény végigiterál a nézőportál minden pixelén
@@ -180,8 +181,44 @@ biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
     pixelhez tartozó színértéket a \texttt{\_color\_divider}-be ami kiszínezi, egy
     fájlba lementi az RGB értékeket. Amint megvagyunk egy képkockával bezárjuk azt a fájlt.
 
-    %\subsection{video_render.c}
-    %todo valami olyat mondtak h tobb .c file kell
+    \subsection{video\_render.c}
+    Ez a fő fájl ahol végül maga a renderelés megtörténik. Kiírjuk a kis szöveget,
+    a \texttt{printCaption()} függvénnyel. Utána bekérjük a 
+    felhasználótól, hogy hány pixelt szeretne látni vízszintesen. Létrehozzuk a
+    nézőportál és a renderelés többi paraméterét, majd ezeket berakjuk a \texttt{viewport\_creator()}-ba
+    ami átírja a szükséges paraméterek értékét. Ezután megkérdezzük a felhasználót,
+    hogy hány gömböt szeretne. Létrehozunk egy \texttt{sphere} dinamikus tömböt aminek a mérete
+    eggyel több lesz mint a felhasználó által megadott érték, mivel a tömbben az első gömb
+    (egy meghatározott paraméterű gömb) a földnek feleltethető meg. Közben ellenőrizzük, hogy
+    sikerült-e létrehozni a dinamikus tömböt. Ha megvan a dinamikus tömb, akkor meghívjuk
+    a \texttt{\_rand\_spheres} függvényt, hogy a többi elemet feltöltse gömbökkel. Ezután a reflekciós
+    számot is bekérjük a felhasználótól ("Milyen vilagosak legyenek a gombok?"). Végül pedig bekérjük
+    a videó hosszát, és abból kiszámoljuk, hogy hány képkockát kell generáljunk (30 fps-en futnak a videók).
+    Minden bekérésnél ellenőriztük, hogy a felhasználó által megadott adat formátuma
+    helyes volt-e és, hogy a megfelelő határokon belül adta-e meg az értékeket. Amennyiben nem 
+    hibaüzenetet küldünk, és várjuk, hogy új adatot adjon meg. A render elkezdése előtt csinálunk
+    egy kis vizuális sávot ahol lehet követni, hogy hogy áll a program.
+
+    Ezután egy for ciklussal elindulunk, és minden képkockához nyitunk egy új fájlt.
+    Itt az \texttt{sprintf()} függvényt használjuk, hogy a fájlneveknek csak a "sorozatszáma"
+    változzon. Ellenőrizzük, hogy sikerült-e megnyitni a fájlt. Ha nem kilépünk, ha igen
+    minden kép elejére beírunk egy-két paramétert ami a ppm formátum miatt használatos.:
+    \begin{lstlisting}[language=C]
+        fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
+    \end{lstlisting}
+    Utána meghívjuk a \texttt{render()} függvényt, a megfelelő paraméterekkel. A vizuális sávra
+    kiírunk egy '/' jelet ha a program az előző kiíráshoz képest legalább 2 százalékot haladt előre.
+    (Ez itt nem működne rövid videókra, de olyan rövidet nem adhat meg a felhasználó.)
+    Ezután meghívjuk a \texttt{harm\_osc\_y} függvényt és kicsit odébb rakjuk a gömböket.
+    Ha az egész képgenerálás kész kiírjuk hogy Kész.
+    Utána ffmpeg-gel összefűzzük a képkockákat videóvá, töröljük a képkockákat (ha a felhasználó 
+    futás közben megszakítja a programot akkor nem törlődnek a képkockák, újabb teljes futásnál viszont
+    már egyben kitörli a program a képkockákat.). Végül lejátsszuk a videót. Itt
+    használtuk a \texttt{system()} parancsot, hogy el tudjuk végezni a fönt említett
+    folyamatokat.
+    Legutoljára pedig felszabadítjuk a dinamikusan allokált tömböt.
+
+
 
 
 

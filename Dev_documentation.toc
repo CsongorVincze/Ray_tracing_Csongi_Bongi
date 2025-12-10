@@ -1,6 +1,6 @@
 \contentsline {section}{\numberline {1}A program ismertetése, áttekintése}{2}{section.1}%
 \contentsline {section}{\numberline {2}Nyelv, használt csomagok, kiegészítők}{2}{section.2}%
-\contentsline {section}{\numberline {3}Az arhitektura áttekintése, a program kezelése}{2}{section.3}%
+\contentsline {section}{\numberline {3}Az architektúra áttekintése, a program kezelése}{2}{section.3}%
 \contentsline {section}{\numberline {4}Fájlok és azok leírásaik}{2}{section.4}%
 \contentsline {subsection}{\numberline {4.1}vec\_3.h}{3}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}ray.h}{3}{subsection.4.2}%
@@ -12,3 +12,4 @@
 \contentsline {subsection}{\numberline {4.8}common\_headers.h}{4}{subsection.4.8}%
 \contentsline {subsection}{\numberline {4.9}animation.h}{4}{subsection.4.9}%
 \contentsline {subsection}{\numberline {4.10}render.h}{4}{subsection.4.10}%
+\contentsline {subsection}{\numberline {4.11}video\_render.c}{5}{subsection.4.11}%
