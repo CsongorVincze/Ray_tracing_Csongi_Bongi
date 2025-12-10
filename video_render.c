@@ -83,7 +83,7 @@ int main(void){
 
     printf("Milyen vilagosak legyenek a gombok? (0 - 1 kozotti valos szam) / How light the spheres should be? (real number between 0 - 1)\n");
     double reflection_number = 0.5;
-    while(scanf("%lf", &reflection_number) != 1){
+    while(scanf("%lf", &reflection_number) != 1 || interval_contains((interval){{0.0, 1.0}}, reflection_number) != 1){
         fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");
         while(getchar() != '\n');
     }
