@@ -28,7 +28,7 @@ int main(void){
     printf("Milyen felbontast szeretnel? (szelesseg pixelekben) (elfogadhato ertekek: 2^n, ahol n egesz es 4 < n < 11)\n");
     printf("Enter a resolution (width in pixels) (acceptable inputs: 2^n, where n is an intiger and 4 < n < 11)\n");
     while(scanf("%d", &image_width) != 1 || image_width % 2 != 0 || image_width < 32 || image_width > 1024){
-        printf("Helytelen formatum! / Incorrect format!\n"); //todo ezt itt ujrairni
+        fprintf(stderr, "Helytelen formatum! / Incorrect format!\n"); //todo ezt itt ujrairni
         while(getchar() != '\n');
     }
 
@@ -65,7 +65,7 @@ int main(void){
     // itt limitaltam a gombok szamat 50-re mivel mar igy is nagyon lassu volt
     // a dupla while-os modszerrel megadakalyozom hogy helytelen adat keruljon be
     while(scanf("%d", &a) != 1 || a < 0 || a > 50){
-        printf("Helytelen formatum! / Incorrect format!\n");
+        fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");
         while(getchar() != '\n');
     }
     num_spheres = a+1; // itt valamiert nem mukodott ha kapasbol a num_spheres-be olvastam be
@@ -77,9 +77,17 @@ int main(void){
         return 1;
     }
 
-    sp_array[0].center = _create(0.0, -100.0, 6.0);
-    sp_array[0].radius = 100.0;
+    sp_array[0].center = _create(0.0, -503.0, 0.0);
+    sp_array[0].radius = 500.0;
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
+
+    printf("Milyen vilagosak legyenek a gombok? (0 - 1 kozotti valos szam) / How light the spheres should be? (real number between 0 - 1)\n");
+    double reflection_number = 0.5;
+    while(scanf("%lf", &reflection_number) != 1){
+        fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");
+        while(getchar() != '\n');
+    }
+    while(getchar() != '\n');
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
     int num_frames = 100;
@@ -111,7 +119,7 @@ int main(void){
         fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
         // printf("Innentol jon a rendes adat!\n");
         
-        render(image_width, image_height, camera_center, delta_h, delta_v, kezdo_pix, sp_array, num_spheres, fp);
+        render(image_width, image_height, camera_center, delta_h, delta_v, kezdo_pix, sp_array, num_spheres, reflection_number, fp);
 
         // ez egy alternativ modszer a program elorehaladasat kovetni
         // fprintf(stderr, "\nFrame %d: Done.\n", k);

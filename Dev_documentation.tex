@@ -81,19 +81,79 @@ biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
     Mivel 3 dimenzióban dolgozunk szükségünk van vektoroperációkra.
     Ez a fájl biztosítja ezek meglétét. A fájlban minden függvény mellé fel van tüntetve, hogy mit csinál,
     így ezt nem részletezem itt. Ez a fájl tartalmazza a \texttt{vec\_3.h} struktúrát is ami, lényegében egy 3 dimenziós vektor típus.
+    Ez a struktúra nagyon sokat könnyít a vekorok kezelésén.
 
     \subsection{ray.h}
     Ez a rész csupán a sugár (ray) struktúrát és egz sugárkövetőt tartalmazza.
     A sugár egy kiinduló pontból és egy irányvektorból áll. a sugárkövető pedig visszaadja
     egy t paraméter függvényében, hogy hol van a sugár.
 
+    \subsection{intervals.h}
+    Ez igazából csak megkönnyíti a program írását, átláthatóságát, ha valahol intervallumosan kell dolgozni.
+    Például a a gömbök eltalálásánál használjuk ezt ki.
+    
+
     \subsection{sphere.h}
     Ez a fájl a gömb struktúrát hozza létre. A gömb egy középpontból és egz sugárból áll.
-    Ezután a \texttt{hit\_sphere} függvény következik ami, lényegileg eldönti, hogy az adott sugár talált-e és ha igen melyik
-    gömböt találta el.
+    Ezután a \texttt{hit\_sphere} függvény következik ami, lényegileg eldönti, hogy az adott sugár eltalálta-e az adott gömböt.
+    Ez a függvény egy bináris értéket ad vissza. Emellett kiszámolja, hogy hol történt a találat, milyen hosszú
+    volt a sugár, és a találatnál a gömb normálvektorát. Ezeket elmenit
+    egy pointerrel inputként megadott \texttt{hit\_rec} struktúrába.
     %itt ezt ki kell felyteni es csekkolni
     Ezt két függvény követi; az \texttt{\_array\_spheres} és a \texttt{\_rand\_spheres}. Előbbi egy vízszintes sorba rak le gömböket.
+    Ez inkább a teszteléshez, paraméterek állításához használandó.
     Útóbbi pedig (bizonyos korlátok kötött) random paraméterekkel rakja le a gömböket.
+
+    \subsection{hittable.h}
+    Ez a header létrehoz egy \texttt{hit\_rec} struktúrát, a következő módon;
+
+        \begin{lstlisting}[language=C]
+        typedef struct{
+            point_3 p;              // ebben taroljuk az eltalalt pontot
+            vec_3 outward_normal;   // mindig kifele mutato norma
+            vec_3 normal;           // ez a norma mindig a sugarral 
+                                    // elenkezo iranyba mutat
+            double t;               // mennyi "ido"-be telt a sugarnak 
+                                    // eltalalni a pontot
+            bool front_face;        // kivulrol jon-e a sugar
+        } hit_rec;
+        \end{lstlisting}
+
+    Ezután létrehozom a \texttt{hit\_side} függvényt. A függvény lényege, hogy meghatározza,
+    hogy a gömb melyik oldalán vagyunk. (A felhasználó által használt .exe fájl enélkül is
+    működne mivel úgy vannak beállítva a paraméterek, hogy minden gömböt kívülről találjukn el.)
+
+    \subsection{hit\_list.h}
+    Ez a header csak egy függvényből áll, ez viszont egy nagyon hasznos függvény.
+    a \texttt{which\_hit} Megnézi, hogy egy adott sugár melyik gömböket találja el
+    (meghívja a \texttt{hit\_sphere} függvényt minden gömbre.), és a legközelebbi találat
+    adatait lementi egy \texttt{hit\_rec} struktúrába. A függvény egyet ad vissza,
+    ha sikerült eltalálni egy gömböt, nullát ha nem sikerült eltalálni semmit sem.
+
+    \subsection{color.h}
+    Először csinálunk egy color nevű típust ami egy hasommása a \texttt{vec\_3}
+    stuktúrának. (Itt kihasználjuk azt, hogy egy RGB-vel megadott színnek pont három
+    komponense van, csakúgy mint egy vektornak is.)
+    Ez a fájl is egy függvényt tartalmaz. A \texttt{\_color\_divider} inputként egy
+    színt és egy fájl pointert kap. A színt szétbontja megfelelő RGB formátumra,
+    és beleírja a fájlba.
+
+    \subsection{common\_headers.h}
+    Ez igazából csak arra jó, hogy ne kelljen folyton az összes header fájlt cipelni,
+    ebbe belerakjuk őket és ezt "icludoljuk". Emellett a program megnyitását követően
+    felugró felirat kiírására itt tároljuk a függvényt. (A többi dolog ami még itt van
+    nem olyan fontos.)
+
+    \subsection{animation.h}
+    Ez azért felelős, hogy valóban videót kapjunk és ne csak egymás után rakott
+    ugyan olyan képeket.
+    Két opciónk van. Az első a gömböket az y tengely mentén harmónikusan rezgeti
+    (\texttt{harm\_osc\_y}). A másik pedig minden irányban valamilyen kis random
+    értéket ad hozzá a gömbök középpontjának koordinátáihoz, így egyfajta véletlen
+    séta szerűséget kapunk (\texttt{random\_walk}).
+
+    \subsection{video_render.c}
+    %todo valami olyat mondtak h tobb .c file kell
 
 
 

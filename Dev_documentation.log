@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.12.10)  10 DEC 2025 03:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.12.10)  10 DEC 2025 15:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -299,30 +299,34 @@ Overfull \hbox (59.17726pt too wide) in paragraph at lines 48--51
  []
 
 
-Overfull \hbox (1.1259pt too wide) in paragraph at lines 81--84
+Overfull \hbox (1.1259pt too wide) in paragraph at lines 81--85
 \OT1/cmr/m/n/10 Mivel 3 di-menzi^^Soban dol-go-zunk sz^^?uks^^Seg^^?unk van vek-toroper^^Saci^^Sokra. Ez a f^^Sajl biz-tos^^S^^Ptja ezek megl^^Set^^Set.
  []
 
-[3] [4] (Dev_documentation.aux)
+[3] (C:\Program Files\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+) (C:\Program Files\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
+) [4] [5] (Dev_documentation.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `Dev_documentation.out' has not changed.
-(rerunfilecheck)             Checksum: 2A80A55E23856714C712DC2B3D8CA105;1235.
+(rerunfilecheck)             Checksum: 9F52E1E6B57FFAA76788B24929FDDEDA;1912.
  ) 
 Here is how much of TeX's memory you used:
- 10379 strings out of 474486
- 158712 string characters out of 5753563
- 1938542 words of memory out of 5000000
- 32562 multiletter control sequences out of 15000+600000
- 562492 words of font info for 51 fonts, out of 8000000 for 9000
+ 10785 strings out of 474486
+ 162717 string characters out of 5753563
+ 2012542 words of memory out of 5000000
+ 32945 multiletter control sequences out of 15000+600000
+ 562659 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,6n,79p,386b,437s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Dev_documentation.pdf (4 pages, 122011 bytes).
+ 75i,6n,79p,467b,1260s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on Dev_documentation.pdf (5 pages, 148174 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 16 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 160 PDF objects out of 1000 (max. 8388607)
+ 33 named destinations out of 1000 (max. 500000)
+ 105 words of extra memory for PDF output out of 10000 (max. 10000000)
 
