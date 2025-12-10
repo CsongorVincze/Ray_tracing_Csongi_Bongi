@@ -1,7 +1,9 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "common_headers.h"
+#include <stdbool.h>
+#include "vec_3.h"
+#include "ray.h"
 
 typedef struct{
     point_3 p; // ebben taroljuk az eltalalt pontot
@@ -11,19 +13,6 @@ typedef struct{
     bool front_face; // kivulrol jon-e a sugar
 } hit_rec;
 
-void hit_side(hit_rec* blabla, ray_3 ray){
-    if(_dot(ray.dir, blabla->outward_normal) > 0.0){
-        blabla->front_face = false;
-    }
-    else{
-        blabla->front_face = true;
-    }
-    blabla->normal = blabla->front_face ? blabla->outward_normal : _neg(blabla->outward_normal);
-
-}
-
-
-
-
+void hit_side(hit_rec* blabla, ray_3 ray);
 
 #endif

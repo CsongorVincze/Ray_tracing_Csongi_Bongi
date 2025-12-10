@@ -1,26 +1,5 @@
-#ifndef COMMON_HEADERS_H
-#define COMMON_HEADERS_H
-
+#include "common.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <stdbool.h>
-#include <time.h>
-
-#include "vec_3.h"
-#include "ray.h"
-#include "color.h"
-#include "intervals.h"
-
-const double infinity = INFINITY;
-const double pi = 3.1415926535897932385;
-//todo: itt amit nem hasznalunk egyaltalan azt toroljuk ki
-
-static inline double _deg_to_rad(double deg){
-    return deg/180.0 * pi;
-}
-
-// felirat a program inditasakor
 
 void printCaption() {
     printf("   _____       __                    \n");
@@ -36,7 +15,3 @@ void printCaption() {
     printf("/_/ |_|\\___/_/ /_/\\__,_/\\___/_/      \n");
     printf("\n");
 }
-
-
-
-#endif

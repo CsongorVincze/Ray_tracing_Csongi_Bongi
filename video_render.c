@@ -1,13 +1,21 @@
-#include "common_headers.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+#include "common.h"
 #include "hittable.h"
 #include "sphere.h"
 #include "hit_list.h"
 #include "animation.h"
 #include "render.h"
-
+#include "vec_3.h"
 
 int main(void){
     
+    // Initialize random number generator once
+    srand(time(NULL));
+
     printCaption();
 
 
@@ -45,11 +53,6 @@ int main(void){
     viewport_creator(image_width, &image_height, aspect_ratio, focal_length, viewport_height, &viewport_width, camera_center, &viewport_h,
                     &viewport_v, &delta_h, &delta_v, &upper_left, &kezdo_pix);
 
-    int max_pattogas = 10;
-
-
-    
-    
     //letrehozzuk a gomboket
     int num_spheres = 5;
     
@@ -70,6 +73,7 @@ int main(void){
         return 1;
     }
 
+    // Initialize spheres
     sp_array[0].center = _create(0.0, -503.0, 0.0);
     sp_array[0].radius = 500.0;
     _rand_spheres(num_spheres, sp_array); // letrehozunk valamennyi random parameteru gombot
@@ -111,15 +115,12 @@ int main(void){
         FILE *fp;
         if( (fp = fopen(nev, "w")) == NULL){
             printf("Hiba a fajl megnyitasakor! / Error when opening the file!");
+            free(sp_array);
             return 1;
         }
         fprintf(fp, "P3\n%d %d\n255\n", image_width, image_height);
-        // printf("Innentol jon a rendes adat!\n");
         
         render(image_width, image_height, camera_center, delta_h, delta_v, kezdo_pix, sp_array, num_spheres, reflection_number, fp);
-
-        // ez egy alternativ modszer a program elorehaladasat kovetni
-        // fprintf(stderr, "\nFrame %d: Done.\n", k);
 
         progress_old = progress_now;
         progress_now = (double) (50.0 * k / num_frames);
@@ -138,9 +139,8 @@ int main(void){
     // ez fuzi ossze a kepeket videova
     system("ffmpeg -y -framerate 30 -i Frame_%03d.ppm -c:v wmv2 -b:v 2000k vidi.wmv");
     
-
     // mostant kirolhetjuk a kepeket
-    system("del Frame_*.ppm");
+    system("del Frame_*.ppm"); // Windows style delete
 
     //nezzuk meg a vidit
     system("start vidi.wmv");
