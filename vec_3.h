@@ -11,7 +11,7 @@ typedef struct {
     double e[3];
 } vec_3;
 
-
+//todo: itt meg kommentelni kell
 //krealo fuggvenzek
 vec_3 _element(double s); // vektort csinal ugyan olyan elemekbol
 vec_3 _create(double x, double y, double z);

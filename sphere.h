@@ -39,8 +39,8 @@ bool hit_sphere(sphere sp, ray_3 ray, interval t_limits, hit_rec *hitdata){
 
     return true;
 }
-
-// gomboket csinalunk random parameterekkel
+//todo
+// gomboket csinalunk egy sorba
 void _array_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
     srand(time(NULL));
     for(int i = 0; i < num_spheres; i++){
@@ -61,6 +61,7 @@ void _rand_spheres(int num_spheres, sphere* sp_array){ // ez itt egy tombot var
         sp_array[i].center.e[2] = (double)((rand() % 10) + 10)/2;
         sp_array[i].radius = (double)((rand() % 10) + 5)/15;
 
+        //todo
         // printf("\nsp_array[%d].center.e[0]: %lf\n", i, sp_array[i].center.e[0]);
         // printf("sp_array[%d].center.e[1]: %lf\n", i, sp_array[i].center.e[1]);  
         // printf("sp_array[%d].center.e[2]: %lf\n", i, sp_array[i].center.e[2]);  
