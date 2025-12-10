@@ -83,7 +83,7 @@ int main(void){
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
     int num_frames = 100;
-    printf("Milyen hosszu videot szeretnel? (a video 30fps-en fut, ajanlott: 1-10, egesz szam elfogadott) / How long video do you want? (video is running on 30 fps, recomended: 1-10, intiger value accepted)\n");
+    printf("Milyen hosszu videot szeretnel? (a video 30fps-en fut, 1-10 kozotti egesz szam elfogadott) / How long video do you want? (video is running on 30 fps, intiger value between 1 and 10 is acceptable)\n");
     int seconds;
     while(scanf("%d", &seconds) != 1 || seconds < 1 || seconds > 10){
         fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");

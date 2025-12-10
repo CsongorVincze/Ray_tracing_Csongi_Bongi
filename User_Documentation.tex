@@ -1,0 +1,70 @@
+\documentclass{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc} % Allows standard characters
+\usepackage{geometry}       % Adjusts page margins
+\usepackage{listings}       % ESSENTIAL: Allows you to format code blocks
+\usepackage{xcolor}         % Adds color support for the code blocks
+\usepackage{hyperref}       % Makes the Table of Contents clickable
+
+% --- CODE BLOCK STYLING ---
+% This sets up how your code will look (like a dark theme editor)
+\lstset{
+    backgroundcolor=\color{black!5},   % Light grey background
+    basicstyle=\ttfamily\small,        % Typewriter font
+    breaklines=true,                   % Break long lines automatically
+    frame=single,                      % Adds a frame around the code
+    keywordstyle=\color{blue},         % Keywords (if/else) in blue
+    commentstyle=\color{green!50!black}% Comments in dark green
+}
+
+% --- TITLE PAGE DATA ---
+\title{Sugárkövető felhasználói dokumentáció}
+\author{Vincze Csongor}
+\date{\today}
+
+% --- DOCUMENT BEGINS HERE ---
+\begin{document}
+
+% 1. Create Title Page
+\maketitle
+
+
+% 3. Main Content
+\section{A program rövid leírása}
+Ez a program egy nagyon alapvető sugárkövetőt (ray tracer) implementál le.
+A lényege, hogy a virtuális kamerából (ahonnét mi a képet látjuk) sugarakat küld,
+és ezeknek a sugaraknak a gömbökkel való ütközöését követi.
+Miután a felhasználó megadja a megfelelő paramétereket a program elkezdi a képkockák
+generálását. A képkockák generálásának előrehaladását közben a felhasználó egy 
+folyamatjelző sávon követheti. Amint az összes képkocka generálása megtörtént
+a szoftver összefűzi a képkockákat egy vidóvá, és ezt el is indítja.
+
+
+\section{Installáció}
+A program (és annak annak minden része) erről a linkről érhető el:
+
+\url{https://github.com/CsongorVincze/Ray_tracing_Csongi_Bongi}
+
+A \texttt{video\_render.exe} készen futtatható. (A többi fájl nagyrésze a forráskódhoz tartozik.)
+A program csak windowson működik jelenleg.
+
+\section{A program kezelése}
+A \texttt{video\_render.exe} futtatásakor a program felteszi a videó
+elkészítéséhez szükéges kérdéseket. Ezekkel állítjuk be a szükséges paramétereket Ezek sorba:
+\begin{enumerate}
+    \item Milyen felbontást szeretnél? (szélesség pixelekben) (elfogadható értékek: $2^n$, ahol $n$ egész és $4 < n < 11$)
+    \item Hány gömbot szeretnél? (ajánlott: 2-10)
+    \item Milyen hosszú videót szeretnél? (a videó 30fps-en fut, 1-10 közötti egész szám elfogadott)
+\end{enumerate}
+
+Az első bemenet a kép vízszíntes pixelszámát adja meg (a képarány 16:9). Itt 1024-nél már jelentősen
+lelassul a program. 256-nál viszont még elég alacsony lesz a készített videó minősége.
+Érdemes lehet ezt az értéket 512-re állítani.
+A gömbök száma egészen 0-tól 50-ig terjedhet. Ennek ellenére nem ajánlott 10-nél
+többet megadni mivel ez is jelentősen lelassítja a programot. A harmadik bekérésnél hasonló
+okokból kiindulva 5 körüli értéket érdemes megadni.
+
+Jó szórakozást!
+
+\end{document}
