@@ -128,7 +128,6 @@ void _vec_print(vec_3 v){
 
 // 0 es 1 kozott kaunk egy random szamot
 static inline double rand_01(){
-    srand(time(NULL));
     return (double)rand() / ((double)RAND_MAX + 1.0);
 }
 

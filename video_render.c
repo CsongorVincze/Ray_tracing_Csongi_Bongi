@@ -83,11 +83,16 @@ int main(void){
 
     printf("Milyen vilagosak legyenek a gombok? (0 - 1 kozotti valos szam) / How light the spheres should be? (real number between 0 - 1)\n");
     double reflection_number = 0.5;
-    while(scanf("%lf", &reflection_number) != 1 || interval_contains((interval){{0.0, 1.0}}, reflection_number) != 1){
-        fprintf(stderr, "Helytelen formatum! / Incorrect format!\n");
-        while(getchar() != '\n');
+    int input_valid = 0;
+    while (!input_valid) {
+        if (scanf("%lf", &reflection_number) == 1 && reflection_number >= 0.0 && reflection_number <= 1.0) {
+            input_valid = 1;
+        } else {
+            fprintf(stderr, "Helytelen formatum vagy ertek! Kerem adjon meg egy valos szamot 0 es 1 kozott. / Incorrect format or value! Please enter a real number between 0 and 1.\n");
+        }
+        // Clear the input buffer
+        while (getchar() != '\n');
     }
-    while(getchar() != '\n');
 
     // most az egeszbol csinalunk egy nagy loopot h tobb "kepkockat" tudjunk generalni
     int num_frames = 100;

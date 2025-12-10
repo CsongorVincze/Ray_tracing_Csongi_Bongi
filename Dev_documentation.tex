@@ -28,7 +28,6 @@
 
 % 1. Create Title Page
 \maketitle
-\newpage
 
 % 2. Create Table of Contents
 \tableofcontents
@@ -152,7 +151,36 @@ biztosítanak függvényeket. Minden fájl ugyan abba n a mappában van.
     értéket ad hozzá a gömbök középpontjának koordinátáihoz, így egyfajta véletlen
     séta szerűséget kapunk (\texttt{random\_walk}).
 
-    \subsection{video_render.c}
+    \subsection{render.h}
+    Itt először létrehozzuk a kamera és a  nézőportál (viewport) paramétereit, a \texttt{viewport\_creator}
+    fügvénnyel. A fix képarányból és a kép szélességéből kiszámoljuk a 
+    kép magasságát. Utána pedig a nézőportált (lényegileg a kiküldött sugaraknak ad egz korlátot
+    hogy az egész térből mit lásson). Ezután kiszámoljuk a kis vektorokat amiket
+    majd hozzáadogatunk a bal felső pixelhez, így jutunk el az összes pixelhez.
+    Végül pedig kiszámoljuk a bal felső pixel (és a bal felső csúcs) koordinátáit.
+
+    Ezután jön a \texttt{ray\_color} függvény. Ez egy rekurzív függvény ami először
+    megnézi hogy az adott irányba indított sugár talált-e (meghívja a \texttt{which\_hit} függvényt)
+    Ha volt találat akkor meghívja magát ujra (a rekurziós szám 20-ra van állítva)
+    a gömb találati pontjáról a gömbtől elfelé
+    random irányba mutató irányvektorral (itt a \texttt{vec\_3}-ból hívja meg a 
+    \texttt{\_unit\_vec\_on\_hemisphere} függvényt), és a gömb adott pontjával
+    (ezeket berakja egy \texttt{ray\_3 struktúrába}), és a végül
+    visszakapott értéket megszorozza a \texttt{reflection\_number}-el (lényegileg az, hogy
+    a színnek hányad részét adja vissza). Amennyiben nem volt találat a háttár színét
+    adja vissza. Ha elertuk a rekurziós számnyi "pattogást" akkor feketét adunk vissza.
+
+    Ezt egy rövid függvény követi; \texttt{rand\_square()} amit az x-y síkon a (-0.5 --- 0.5)x(-0.5 --- 0.5) területen 
+    visszaad egy random vektort (z komponens mindig 0).
+
+    Végezetül a render függvény végigiterál a nézőportál minden pixelén
+    bal fentről kezdve. A legbelső for ciklus azért kell, hogy ne olyan élesek, szögletesek legyenek
+    az objektumok határai (itt használjuk fel a \texttt{rand\_square()} függvényt, hogy mindig 
+    kicsit más irányba küldjük a sugarakat, és aztán kiátlagoljuk az eredményt). Elküldünk minden 
+    pixelhez tartozó színértéket a \texttt{\_color\_divider}-be ami kiszínezi, egy
+    fájlba lementi az RGB értékeket. Amint megvagyunk egy képkockával bezárjuk azt a fájlt.
+
+    %\subsection{video_render.c}
     %todo valami olyat mondtak h tobb .c file kell
 
 
